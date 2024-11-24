@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h!d)s-m2*&hncwz3v!9m3=jfjtow(p%*r8+-#_*tl*)$!3ucog'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False  # Set to False for production
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1:8000']
+ALLOWED_HOSTS = ['yourdomain.com', '127.0.0.1']  # Add your production domain/IP
 
 
 # Application definition
@@ -43,12 +43,13 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'csp.middleware.CSPMiddleware',  # Add CSP middleware
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -123,10 +124,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 # Authentication settings
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
 
 # Security settings
 SECURE_BROWSER_XSS_FILTER = True
