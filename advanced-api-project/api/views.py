@@ -2,6 +2,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters import rest_framework as filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book
 from .serializers import BookSerializer
