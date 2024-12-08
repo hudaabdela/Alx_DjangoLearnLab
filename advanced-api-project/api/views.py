@@ -4,28 +4,18 @@ from .models import Book
 from .serializers import BookSerializer
 
 
-# List and Create View (ListView and CreateView combined)
+# List and Create View
 class BookListCreateView(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def create(self, request, *args, **kwargs):
-        """Custom create logic with validation feedback."""
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(
-            {"message": "Book created successfully!", "data": serializer.data},
-            status=status.HTTP_201_CREATED
-        )
 
-
-# Detail, Update, and Delete Views
-class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
+# Update View
+class UpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         """Custom update logic with enhanced response."""
@@ -39,6 +29,12 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
             {"message": "Book updated successfully!", "data": serializer.data},
             status=status.HTTP_200_OK
         )
+
+
+# Delete View
+class DeleteView(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
         """Custom delete response message."""
