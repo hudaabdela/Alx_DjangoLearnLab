@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .models import Book
 from .serializers import BookSerializer
 
@@ -8,21 +9,21 @@ from .serializers import BookSerializer
 class ListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]  # Read-only access
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Read-only access
 
 
 # DetailView: Retrieve a specific book by ID
 class DetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]  # Read-only access
+    permission_classes = [IsAuthenticatedOrReadOnly]  # Read-only access
 
 
 # CreateView: Create a new book
 class CreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]  # Only authenticated users can create
+    permission_classes = [IsAuthenticated]  # Only authenticated users can create
 
     def create(self, request, *args, **kwargs):
         """Custom create logic with enhanced response."""
@@ -40,7 +41,7 @@ class CreateView(generics.CreateAPIView):
 class UpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         """Custom update logic with enhanced response."""
@@ -59,7 +60,7 @@ class UpdateView(generics.UpdateAPIView):
 # DeleteView: Delete a book by ID
 class DeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
         """Custom delete response message."""
