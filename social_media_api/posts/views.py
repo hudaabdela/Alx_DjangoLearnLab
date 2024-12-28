@@ -8,8 +8,7 @@ from .permissions import IsAuthorOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 
 class FeedPagination(PageNumberPagination):
-    page_size = 10  
-
+    page_size = 10
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -42,5 +41,3 @@ class FeedViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         followed_users = self.request.user.following.all()
         return Post.objects.filter(author__in=followed_users).order_by('-created_at')
-
-# Create your views here.
