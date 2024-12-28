@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)  
+    password = serializers.CharField(write_only=True)  # Ensures password is write-only
 
     class Meta:
         model = User
