@@ -32,7 +32,7 @@ class FollowUserView(generics.GenericAPIView):
 
     def post(self, request, user_id):
         try:
-            user_to_follow = CustomUser.objects.get(id=user_id)
+            user_to_follow = CustomUser.objects.all().get(id=user_id)
         except CustomUser.DoesNotExist:
             return Response({'detail': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -47,7 +47,7 @@ class UnfollowUserView(generics.GenericAPIView):
 
     def post(self, request, user_id):
         try:
-            user_to_unfollow = CustomUser.objects.get(id=user_id)
+            user_to_unfollow = CustomUser.objects.all().get(id=user_id)
         except CustomUser.DoesNotExist:
             return Response({'detail': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
 
